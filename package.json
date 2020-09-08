@@ -1,0 +1,41 @@
+{
+  "name": "labephotosbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node-dev ./src/index.ts",
+    "migration": "ts-node-dev ./src/migration/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arturmmagalhaes/LabePhotos_backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arturmmagalhaes/LabePhotos_backend/issues"
+  },
+  "homepage": "https://github.com/arturmmagalhaes/LabePhotos_backend#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.5",
+    "mysql": "^2.18.1",
+    "ts-node-dev": "^1.0.0-pre.62",
+    "typescript": "^4.0.2",
+    "uuid": "^8.3.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/express": "^4.17.0",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/knex": "^0.16.1",
+    "@types/node": "^14.6.4",
+    "@types/uuid": "^8.3.0"
+  }
+}
