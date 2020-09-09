@@ -36,7 +36,13 @@ export class PhotoController {
 
     public async readPhoto(req: Request, res: Response) {
         try {
-            const result = await PhotoController.photoBusiness.readImage(req.headers.authorization as string);
+            const dataController = {
+                token: req.headers.authorization as string,
+                id_photo: req.params.id
+            }
+
+            const result = await PhotoController.photoBusiness.readImage(dataController);
+            
             res.status(200).send({
                 message: result
             });
