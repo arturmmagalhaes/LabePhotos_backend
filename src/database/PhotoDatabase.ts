@@ -22,11 +22,11 @@ export class PhotoDatabase extends BaseDatabase {
         }
     }
 
-    public async createTag(data: TagBaseModel): Promise<void> {
+    public async createTag(data: any, hashtag: string): Promise<void> {
         try {
             await super.getConnection().raw(`
                 INSERT INTO ${PhotoDatabase.TABLE_TAG}
-                VALUES ("${data.id}", "${data.hashtag}", "${data.id_photo}")
+                VALUES ("${data.id}", "${hashtag}", "${data.id_photo}")
             `);
         } catch (error) {
             throw new Error(error.message);

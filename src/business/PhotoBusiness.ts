@@ -3,6 +3,7 @@ import { PhotoDatabase } from "../database/PhotoDatabase";
 import { Authenticator } from "../services/Authenticator";
 import moment from "moment";
 import { PhotoReadImageInput, PhotoReadImageOutput } from "../model/PhotoModel";
+import { Console } from "console";
 
 export class PhotoBusiness {
     constructor(
@@ -23,15 +24,27 @@ export class PhotoBusiness {
                 file: dataController.file,
                 collection: dataController.collection
             }
+            
+            const result = this.hashtag(dataController.hashtag);
 
-            const dataTag = {
-                id: await this.idGenerate.generate(),
-                hashtag: dataController.hashtag,
-                id_photo: dataBusiness.id
+            const invalidHashtag = result.filter(element => {
+                return element[0] !== '#'
+            })
+
+            if(invalidHashtag.length > 0){
+                throw new Error("Invalid Hashtag");
             }
             
             await this.photoDatabase.createPhoto(dataBusiness);
-            await this.photoDatabase.createTag(dataTag);
+            
+            result.forEach(async (element: string) => {
+                const dataTag = {
+                    id: await this.idGenerate.generate(),
+                    id_photo: dataBusiness.id
+                }
+        
+                await this.photoDatabase.createTag(dataTag, element);
+            });
         } catch (error) {
             throw new Error(error.message);
         }
@@ -53,4 +66,9 @@ export class PhotoBusiness {
             throw new Error(error.message);
         }
     }
+
+    public hashtag(word: string) {
+        return word.split(',');
+    }
+
 }
