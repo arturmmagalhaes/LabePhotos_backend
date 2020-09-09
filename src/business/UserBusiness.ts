@@ -2,6 +2,7 @@ import { UserDatabase } from "../database/UserDatabase";
 import { IdGenerate } from "../services/IdGenerate";
 import { HashManager } from "../services/HashManager";
 import { Authenticator, AuthenticatorData } from "../services/Authenticator";
+import { UserControllerModel, UserControllerSignInModel } from "../model/UserModel";
 
 export class UserBusiness {
     
@@ -12,7 +13,7 @@ export class UserBusiness {
         private authenticator: Authenticator
     ){}
 
-    public async signUp(dataController: any) {
+    public async signUp(dataController: UserControllerModel): Promise<void> {
         try {
 
             if(!dataController || !dataController.name ||
@@ -43,7 +44,7 @@ export class UserBusiness {
         }
     }
 
-    public async signIn(dataController: any): Promise<string> {
+    public async signIn(dataController: UserControllerSignInModel): Promise<string> {
         try {
 
             if(!dataController || !dataController.email ||
@@ -58,15 +59,15 @@ export class UserBusiness {
 
             const result = await this.userDatabase.signIn(dataController.email);
             
-            const password = await this.hashManager.compare(dataController.password, result[0].password);
+            const password = await this.hashManager.compare(dataController.password, result.password);
             
             if(!password){
                 throw new Error("Invalid email or password");
             }
 
             const dataAuthenticator: AuthenticatorData = {
-                id: result[0].id,
-                nickname: result[0].nickname
+                id: result.id,
+                nickname: result.nickname
             }
 
             const token = await this.authenticator.generateToken(dataAuthenticator)
@@ -77,7 +78,7 @@ export class UserBusiness {
         }
     }
     
-    public businessRules(data: any) {
+    public businessRules(data: UserControllerSignInModel) {
         if(data.email.indexOf("@") === -1) {
             throw new Error("Invalid Email");
         }
