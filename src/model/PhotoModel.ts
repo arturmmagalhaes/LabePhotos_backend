@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 export interface PhotoBaseModel {
     id: string,
     title: string,
@@ -7,4 +5,18 @@ export interface PhotoBaseModel {
     create_at: string,
     file: string,
     collection: string
+}
+
+export interface PhotoReadImageInput {
+    id_user: string,
+    id_photo: string
+}
+
+export interface PhotoReadImageOutput {
+    title: string,
+    create_at: string, 
+    file: string, 
+    collection: string, 
+    hashtag: string,
+    nickname: string
 }

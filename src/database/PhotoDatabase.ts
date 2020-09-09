@@ -1,7 +1,6 @@
 import { BaseDatabase } from "./base/BaseDatabase";
-import { PhotoBaseModel } from "../model/PhotoModel";
+import { PhotoBaseModel, PhotoReadImageInput, PhotoReadImageOutput } from "../model/PhotoModel";
 import { TagBaseModel } from "../model/TagModel";
-import { UserDatabase } from "./UserDatabase";
 
 export class PhotoDatabase extends BaseDatabase {
 
@@ -9,7 +8,7 @@ export class PhotoDatabase extends BaseDatabase {
     private static TABLE_TAG = "Tags";
     private static TABLE_USER = "UserLabePhoto"
 
-    public async createPhoto(data: PhotoBaseModel) {
+    public async createPhoto(data: PhotoBaseModel): Promise<void> {
         try {
             await super.getConnection().raw(`
                 INSERT INTO ${PhotoDatabase.TABLE_NAME}
@@ -23,7 +22,7 @@ export class PhotoDatabase extends BaseDatabase {
         }
     }
 
-    public async createTag(data: TagBaseModel) {
+    public async createTag(data: TagBaseModel): Promise<void> {
         try {
             await super.getConnection().raw(`
                 INSERT INTO ${PhotoDatabase.TABLE_TAG}
@@ -36,7 +35,7 @@ export class PhotoDatabase extends BaseDatabase {
         }
     }
 
-    public async readImage(data: any) {
+    public async readImage(data: PhotoReadImageInput): Promise<PhotoReadImageOutput> {
         try {
             const result = await super.getConnection().raw(`
                 SELECT title, create_at, file, collection, hashtag, nickname FROM ${PhotoDatabase.TABLE_NAME}
@@ -48,7 +47,14 @@ export class PhotoDatabase extends BaseDatabase {
                 AND ${PhotoDatabase.TABLE_NAME}.id = "${data.id_photo}"
             `);
             
-            return result[0];
+            return {
+                title: result[0][0].title,
+                create_at: result[0][0].create_at, 
+                file: result[0][0].file, 
+                collection: result[0][0].collection, 
+                hashtag: result[0][0].hashtag,
+                nickname: result[0][0].nickname
+            };
         } catch (error) {
             throw new Error(error.message);
         } finally {

@@ -2,6 +2,7 @@ import { IdGenerate } from "../services/IdGenerate";
 import { PhotoDatabase } from "../database/PhotoDatabase";
 import { Authenticator } from "../services/Authenticator";
 import moment from "moment";
+import { PhotoReadImageInput, PhotoReadImageOutput } from "../model/PhotoModel";
 
 export class PhotoBusiness {
     constructor(
@@ -10,7 +11,7 @@ export class PhotoBusiness {
         private authenticator: Authenticator
     ){}
 
-    public async createPhoto(dataController: any) {
+    public async createPhoto(dataController: any): Promise<void> {
         try {
             const dataToken = await this.authenticator.getData(dataController.token);
 
@@ -36,11 +37,11 @@ export class PhotoBusiness {
         }
     }
 
-    public async readImage(dataController: any) {
+    public async readImage(dataController: any): Promise<PhotoReadImageOutput> {
         try {
             const dataToken = await this.authenticator.getData(dataController.token);
             
-            const dataBusiness = {
+            const dataBusiness: PhotoReadImageInput = {
                 id_user: dataToken.id,
                 id_photo: dataController.id_photo
             }
