@@ -35,4 +35,21 @@ export class PhotoBusiness {
             throw new Error(error.message);
         }
     }
+
+    public async readImage(dataController: any) {
+        try {
+            const dataToken = await this.authenticator.getData(dataController.token);
+            
+            const dataBusiness = {
+                id_user: dataToken.id,
+                id_photo: dataController.id_photo
+            }
+
+            const result = await this.photoDatabase.readImage(dataBusiness);
+            
+            return result;
+        } catch(error) {
+            throw new Error(error.message);
+        }
+    }
 }

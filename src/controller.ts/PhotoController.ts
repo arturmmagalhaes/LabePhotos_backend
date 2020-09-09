@@ -33,4 +33,23 @@ export class PhotoController {
             });
         }
     }
+
+    public async readPhoto(req: Request, res: Response) {
+        try {
+            const dataController = {
+                token: req.headers.authorization as string,
+                id_photo: req.params.id
+            }
+
+            const result = await PhotoController.photoBusiness.readImage(dataController);
+            
+            res.status(200).send({
+                message: result
+            });
+        } catch (error) {
+            res.status(400).send({
+                message: error.message
+            });
+        }
+    }
 }
