@@ -4,6 +4,7 @@ import { Authenticator } from "../services/Authenticator";
 import moment from "moment";
 import { PhotoReadImageInput, PhotoReadImageOutput } from "../model/PhotoModel";
 import { Console } from "console";
+import { InvalidParameterError } from "../errors/InvalidParameterError";
 
 export class PhotoBusiness {
     constructor(
@@ -14,6 +15,12 @@ export class PhotoBusiness {
 
     public async createPhoto(dataController: any): Promise<void> {
         try {
+            if(!dataController || !dataController.title ||
+                !dataController.token || !dataController.file ||
+                !dataController.collection){
+                    throw new InvalidParameterError("Invalid Entry");
+                }
+
             const dataToken = await this.authenticator.getData(dataController.token);
 
             const dataBusiness = {
@@ -32,7 +39,7 @@ export class PhotoBusiness {
             })
 
             if(invalidHashtag.length > 0){
-                throw new Error("Invalid Hashtag");
+                throw new InvalidParameterError("Invalid Hashtag");
             }
             
             await this.photoDatabase.createPhoto(dataBusiness);
@@ -52,6 +59,10 @@ export class PhotoBusiness {
 
     public async readImage(dataController: any): Promise<PhotoReadImageOutput> {
         try {
+            if(!dataController.token || !dataController.id_photo) {
+                throw new InvalidParameterError("Invalid Entry");
+            }
+
             const dataToken = await this.authenticator.getData(dataController.token);
             
             const dataBusiness: PhotoReadImageInput = {

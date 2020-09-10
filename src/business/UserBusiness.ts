@@ -3,6 +3,7 @@ import { IdGenerate } from "../services/IdGenerate";
 import { HashManager } from "../services/HashManager";
 import { Authenticator, AuthenticatorData } from "../services/Authenticator";
 import { UserControllerModel, UserControllerSignInModel } from "../model/UserModel";
+import { InvalidParameterError } from "../errors/InvalidParameterError";
 
 export class UserBusiness {
     
@@ -19,7 +20,7 @@ export class UserBusiness {
             if(!dataController || !dataController.name ||
                !dataController.email || !dataController.nickname ||
                !dataController.password){
-                throw new Error ("Invalid Entry");
+                throw new InvalidParameterError("Invalid Entry");
             }
 
             this.businessRules({
@@ -49,7 +50,7 @@ export class UserBusiness {
 
             if(!dataController || !dataController.email ||
                !dataController.password) {
-                throw new Error("Invalid Entry");
+                throw new InvalidParameterError("Invalid Entry");
             }
 
             this.businessRules({
@@ -62,7 +63,7 @@ export class UserBusiness {
             const password = await this.hashManager.compare(dataController.password, result.password);
             
             if(!password){
-                throw new Error("Invalid email or password");
+                throw new InvalidParameterError("Invalid email or password");
             }
 
             const dataAuthenticator: AuthenticatorData = {
@@ -80,11 +81,11 @@ export class UserBusiness {
     
     public businessRules(data: UserControllerSignInModel) {
         if(data.email.indexOf("@") === -1) {
-            throw new Error("Invalid Email");
+            throw new InvalidParameterError("Invalid Email");
         }
 
         if(data.password.length < 6) {
-            throw new Error("Password Must Contain 6 Characters")
+            throw new InvalidParameterError("Password Must Contain 6 Characters")
         }
     }
 }
