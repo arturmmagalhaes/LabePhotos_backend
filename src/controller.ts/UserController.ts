@@ -27,7 +27,7 @@ export class UserController {
                 message: "Created User"
             });
         } catch (error) {
-            res.status(400).send({
+            res.status(error.errorCode || 400).send({
                 message: error.message
             });
         }
