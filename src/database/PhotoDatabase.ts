@@ -46,13 +46,17 @@ export class PhotoDatabase extends BaseDatabase {
                 WHERE ${PhotoDatabase.TABLE_USER}.id = "${data.id_user}" 
                 AND ${PhotoDatabase.TABLE_NAME}.id = "${data.id_photo}"
             `);
-            
+
+            const hashtags = result[0].map((element: any) => {
+                return element.hashtag
+            });
+
             return {
                 title: result[0][0].title,
                 create_at: result[0][0].create_at, 
                 file: result[0][0].file, 
                 collection: result[0][0].collection, 
-                hashtag: result[0][0].hashtag,
+                hashtag: hashtags,
                 nickname: result[0][0].nickname
             };
         } catch (error) {

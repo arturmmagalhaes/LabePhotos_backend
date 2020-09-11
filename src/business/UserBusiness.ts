@@ -4,6 +4,7 @@ import { HashManager } from "../services/HashManager";
 import { Authenticator, AuthenticatorData } from "../services/Authenticator";
 import { UserControllerModel, UserControllerSignInModel } from "../model/UserModel";
 import { InvalidParameterError } from "../errors/InvalidParameterError";
+import { BaseError } from "../errors/base/BaseError";
 
 export class UserBusiness {
     
@@ -15,7 +16,6 @@ export class UserBusiness {
     ){}
 
     public async signUp(dataController: UserControllerModel): Promise<void> {
-        try {
 
             if(!dataController || !dataController.name ||
                !dataController.email || !dataController.nickname ||
@@ -39,14 +39,9 @@ export class UserBusiness {
             }
 
             await this.userDatabase.signUp(dataBusiness);
-
-        } catch (error) {
-            throw new Error(error.message);
-        }
     }
 
     public async signIn(dataController: UserControllerSignInModel): Promise<string> {
-        try {
 
             if(!dataController || !dataController.email ||
                !dataController.password) {
@@ -74,9 +69,6 @@ export class UserBusiness {
             const token = await this.authenticator.generateToken(dataAuthenticator)
             
             return token;
-        } catch (error) {
-            throw new Error(error.message);
-        }
     }
     
     public businessRules(data: UserControllerSignInModel) {

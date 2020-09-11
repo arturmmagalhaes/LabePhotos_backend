@@ -28,7 +28,7 @@ export class PhotoController {
                 message: "Created Photo"
             });
         } catch (error) {
-            res.status(400).send({
+            res.status(error.errorCode || 400).send({
                 message: error.message
             });
         }
@@ -47,7 +47,7 @@ export class PhotoController {
                 message: result
             });
         } catch (error) {
-            res.status(400).send({
+            res.status(error.errorCode || 400).send({
                 message: error.message
             });
         }
