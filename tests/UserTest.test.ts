@@ -291,22 +291,23 @@ describe("SignIn", () => {
 
     let userDatabase = {
         signUp: jest.fn(() => {}),
-        signIn: jest.fn(() => {})
+        signIn: jest.fn(() => {return {
+            password: "nameee"}
+        })
     }
     let idGenerate = {
         generate: jest.fn(() => "id")
     }
     let hashManager = {
-        hash: jest.fn(() => "hash"),
-        compare: jest.fn(() => {return true})
+        compare: jest.fn((password, isPassword) => {return true})
     }
     let authenticator = {
         generateToken: jest.fn(() => {return "jwt"})
     }
     
-    test.skip("SignIn", async () => {
+    test("SignIn", async () => {
 
-        expect.assertions(2);
+        expect.assertions(3);
 
         const userBusiness = new UserBusiness(
             userDatabase as any,
@@ -315,14 +316,13 @@ describe("SignIn", () => {
             authenticator as any
         );
 
-        const result = await userBusiness.signIn({
+        await userBusiness.signIn({
             email: "name@gmail.com",
             password: "nameee"
         });
 
-        console.log(result);
-
-        expect(hashManager.compare).toBeCalled();
+        expect(userDatabase.signIn).toBeCalled();
+        expect(hashManager.compare("nameee", "nameee")).toBe(true);
         expect(authenticator.generateToken).toBeCalled();
     });
 
