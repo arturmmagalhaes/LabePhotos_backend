@@ -42,7 +42,7 @@ export class UserController {
 
             res.status(200).send({token});            
         } catch (error) {
-            res.status(400).send({
+            res.status(error.errorCode || 400).send({
                 message: error.message
             });
         }

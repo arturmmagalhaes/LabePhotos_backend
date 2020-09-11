@@ -14,7 +14,7 @@ export class PhotoBusiness {
     ){}
 
     public async createPhoto(dataController: any): Promise<void> {
-        try {
+
             if(!dataController || !dataController.title ||
                 !dataController.token || !dataController.file ||
                 !dataController.collection){
@@ -52,13 +52,10 @@ export class PhotoBusiness {
         
                 await this.photoDatabase.createTag(dataTag, element);
             });
-        } catch (error) {
-            throw new Error(error.message);
-        }
     }
 
     public async readImage(dataController: any): Promise<PhotoReadImageOutput> {
-        try {
+
             if(!dataController.token || !dataController.id_photo) {
                 throw new InvalidParameterError("Invalid Entry");
             }
@@ -73,9 +70,6 @@ export class PhotoBusiness {
             const result = await this.photoDatabase.readImage(dataBusiness);
             
             return result;
-        } catch(error) {
-            throw new Error(error.message);
-        }
     }
 
     public hashtag(word: string) {

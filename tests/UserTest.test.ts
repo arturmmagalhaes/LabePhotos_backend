@@ -224,7 +224,7 @@ describe("SignIn - Errors", () => {
     let authenticator = {}
     
     test("SignIn - Errors dataController", async () => {
-        expect.assertions(1);
+        expect.assertions(2);
         try {
             const userBusiness = new UserBusiness(
                 userDatabase as any,
@@ -240,11 +240,12 @@ describe("SignIn - Errors", () => {
 
         } catch (error) {
             expect(error.message).toBe("Invalid Entry");
+            expect(error.errorCode).toBe(422);
         }
     });
 
     test("SignIn - Errors Missing Email", async () => {
-        expect.assertions(1);
+        expect.assertions(2);
         try {
             const userBusiness = new UserBusiness(
                 userDatabase as any,
@@ -260,11 +261,12 @@ describe("SignIn - Errors", () => {
 
         } catch (error) {
             expect(error.message).toBe("Invalid Entry");
+            expect(error.errorCode).toBe(422);
         }
     });
 
     test("SignIn - Errors Missing Password", async () => {
-        expect.assertions(1);
+        expect.assertions(2);
         try {
             const userBusiness = new UserBusiness(
                 userDatabase as any,
@@ -280,6 +282,7 @@ describe("SignIn - Errors", () => {
 
         } catch (error) {
             expect(error.message).toBe("Invalid Entry");
+            expect(error.errorCode).toBe(422);
         }
     });
 });

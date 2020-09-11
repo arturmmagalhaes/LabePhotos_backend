@@ -42,7 +42,6 @@ export class UserBusiness {
     }
 
     public async signIn(dataController: UserControllerSignInModel): Promise<string> {
-        try {
 
             if(!dataController || !dataController.email ||
                !dataController.password) {
@@ -70,9 +69,6 @@ export class UserBusiness {
             const token = await this.authenticator.generateToken(dataAuthenticator)
             
             return token;
-        } catch (error) {
-            throw new Error(error.message);
-        }
     }
     
     public businessRules(data: UserControllerSignInModel) {
