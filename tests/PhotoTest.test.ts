@@ -118,7 +118,45 @@ describe("createPhoto - Errors", () => {
 
 });
 
+describe("createPhoto", () => {
+
+    let photoDatabase = {
+        createPhoto: jest.fn(() => {}),
+        createTag: jest.fn(() => {})
+    }
+    let idGenerate = {
+        generate: jest.fn(() => {return "id"})
+    }
+    let authenticator = {
+        getData: jest.fn(() => "tokenId")
+    }
+
+    test("createPhoto", async () => {
+
+        expect.assertions(3);
+
+        const photoBusiness = new PhotoBusiness(
+            photoDatabase as any,
+            idGenerate as any,
+            authenticator as any
+        );
+
+        await photoBusiness.createPhoto({
+            title: "title",
+            token: "token",
+            file: "file",
+            collection: "collection",
+            hashtag: "#hashtag"
+        });
+
+        expect(authenticator.getData).toBeCalled();
+        expect(idGenerate.generate).toBeCalled();
+        expect(photoDatabase.createPhoto).toBeCalled();
+    });
+});
+
 describe("ReadImage - Errors", () => {
+
 
     let userDatabase = {}
     let idGenerate = {}
@@ -182,5 +220,36 @@ describe("ReadImage - Errors", () => {
             expect(error.message).toBe("Invalid Entry");
             expect(error.errorCode).toBe(422);
         }
+    });
+});
+
+describe("ReadImage", () => {
+
+
+    let photoDatabase = {
+        readImage: jest.fn(() => {})
+    }
+    let idGenerate = {}
+    let authenticator = {
+        getData: jest.fn(() => {return "tokenId"})
+    }
+
+    test("ReadImage - Errors Missing dataController", async () => {
+        
+        expect.assertions(2);
+
+        const photoBusiness = new PhotoBusiness(
+            photoDatabase as any,
+            idGenerate as any,
+            authenticator as any
+        );
+
+        await photoBusiness.readImage({
+            token: "id_user",
+            id_photo: "id_photo"
+        });
+
+        expect(authenticator.getData).toBeCalled();
+        expect(photoDatabase.readImage).toBeCalled();
     });
 })
