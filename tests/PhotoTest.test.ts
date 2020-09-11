@@ -1,6 +1,6 @@
 import { PhotoBusiness } from "../src/business/PhotoBusiness";
 
-describe("", () => {
+describe("createPhoto - Errors", () => {
 
     let userDatabase = {}
     let idGenerate = {}
@@ -111,6 +111,14 @@ describe("", () => {
         }
     });
 
+});
+
+describe("ReadImage - Errors", () => {
+
+    let userDatabase = {}
+    let idGenerate = {}
+    let authenticator = {}
+
     test("ReadImage - Errors Missing dataController", async () => {
         expect.assertions(1);
         try {
@@ -167,5 +175,4 @@ describe("", () => {
             expect(error.message).toBe("Invalid Entry");
         }
     });
-
-});
+})
