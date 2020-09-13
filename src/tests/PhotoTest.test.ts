@@ -1,4 +1,4 @@
-import { PhotoBusiness } from "../src/business/PhotoBusiness";
+import { PhotoBusiness } from "../business/PhotoBusiness";
 
 describe("createPhoto - Errors", () => {
 

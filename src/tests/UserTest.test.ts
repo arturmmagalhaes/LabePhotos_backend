@@ -1,5 +1,5 @@
-import { UserBusiness } from "../src/business/UserBusiness";
-import { UserDatabase } from "../src/database/UserDatabase";
+import { UserBusiness } from "../business/UserBusiness";
+import { UserDatabase } from "../database/UserDatabase";
 
 describe("SignUp - Errors", () => {
 
