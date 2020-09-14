@@ -21,7 +21,16 @@
   },
   "homepage": "https://github.com/arturmmagalhaes/LabePhotos_backend#readme",
   "dependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/cors": "^2.8.7",
+    "@types/express": "^4.17.0",
+    "@types/jest": "^26.0.13",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/knex": "^0.16.1",
+    "@types/node": "^14.6.4",
+    "@types/uuid": "^8.3.0",
     "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.0",
     "jest": "^26.4.2",
@@ -31,14 +40,7 @@
     "mysql": "^2.18.1",
     "ts-jest": "^26.3.0",
     "typescript": "^4.0.2",
-    "uuid": "^8.3.0",
-    "@types/bcrypt": "^3.0.0",
-    "@types/express": "^4.17.0",
-    "@types/jest": "^26.0.13",
-    "@types/jsonwebtoken": "^8.5.0",
-    "@types/knex": "^0.16.1",
-    "@types/node": "^14.6.4",
-    "@types/uuid": "^8.3.0"
+    "uuid": "^8.3.0"
   },
   "devDependencies": {}
 }
