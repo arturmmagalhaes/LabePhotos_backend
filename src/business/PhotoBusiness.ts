@@ -54,6 +54,16 @@ export class PhotoBusiness {
             });
     }
 
+    public async getFeed(dataController: any) {
+        if(!dataController){
+            throw new InvalidParameterError("Invalid Entry");
+        }
+
+        const dataToken = await this.authenticator.getData(dataController.token);
+
+        return await this.photoDatabase.getFeed(dataToken.id);
+    }
+
     public async readImage(dataController: any): Promise<PhotoReadImageOutput> {
 
             if(!dataController.token || !dataController.id_photo) {

@@ -37,6 +37,21 @@ class PhotoController {
             }
         });
     }
+    getFeed(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield PhotoController.photoBusiness.getFeed({ token: req.headers.authorization });
+                res.status(200).send({
+                    data: result
+                });
+            }
+            catch (error) {
+                res.status(error.errorCode || 400).send({
+                    message: error.message
+                });
+            }
+        });
+    }
     readPhoto(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

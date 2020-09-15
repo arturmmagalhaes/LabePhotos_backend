@@ -1,5 +1,5 @@
 import { BaseDatabase } from "./base/BaseDatabase";
-import { PhotoBaseModel, PhotoReadImageInput, PhotoReadImageOutput } from "../model/PhotoModel";
+import { PhotoBaseModel, PhotoFeedModel, PhotoReadImageInput, PhotoReadImageOutput } from "../model/PhotoModel";
 import { TagBaseModel } from "../model/TagModel";
 
 export class PhotoDatabase extends BaseDatabase {
@@ -32,6 +32,31 @@ export class PhotoDatabase extends BaseDatabase {
             throw new Error(error.message);
         } finally {
             await super.destroyConnection();
+        }
+    }
+
+    public async getFeed(id: string): Promise<PhotoFeedModel[]> { 
+        try {
+            const data = await super.getConnection().raw(`
+                SELECT * FROM ${PhotoDatabase.TABLE_NAME}
+                JOIN ${PhotoDatabase.TABLE_USER} 
+                ON ${PhotoDatabase.TABLE_NAME}.id_author = ${PhotoDatabase.TABLE_USER}.id
+                WHERE ${PhotoDatabase.TABLE_USER}.id = "${id}"
+            `);
+            const result = data[0].map((element: any) => {
+                return {
+                    id: element.id,
+                    title: element.title,
+                    id_author: element.id_author,
+                    name_author: element.name,
+                    create_at: element.create_at,
+                    file: element.file,
+                    collection: element.collection
+                }
+            });
+            return result;
+        } catch (error) {
+            throw new Error(error.message);
         }
     }
 
