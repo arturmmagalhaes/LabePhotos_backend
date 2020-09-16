@@ -54,6 +54,15 @@ class PhotoBusiness {
             }));
         });
     }
+    getFeed(dataController) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!dataController) {
+                throw new InvalidParameterError_1.InvalidParameterError("Invalid Entry");
+            }
+            const dataToken = yield this.authenticator.getData(dataController.token);
+            return yield this.photoDatabase.getFeed(dataToken.id);
+        });
+    }
     readImage(dataController) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!dataController.token || !dataController.id_photo) {

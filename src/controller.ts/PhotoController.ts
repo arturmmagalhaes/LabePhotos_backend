@@ -34,6 +34,20 @@ export class PhotoController {
         }
     }
 
+    public async getFeed(req: Request, res: Response){
+        try {
+            const result = await PhotoController.photoBusiness.getFeed({token: req.headers.authorization});
+
+            res.status(200).send({
+                data: result
+            });
+        } catch (error) {
+            res.status(error.errorCode || 400).send({
+                message: error.message
+            });
+        }
+    }
+
     public async readPhoto(req: Request, res: Response) {
         try {
             const dataController = {

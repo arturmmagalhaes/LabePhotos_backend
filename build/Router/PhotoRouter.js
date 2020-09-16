@@ -7,5 +7,6 @@ exports.photoRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const PhotoController_1 = require("../controller.ts/PhotoController");
 exports.photoRouter = express_1.default.Router();
+exports.photoRouter.get('/', new PhotoController_1.PhotoController().getFeed);
 exports.photoRouter.post('/create', new PhotoController_1.PhotoController().createPhoto);
 exports.photoRouter.get('/:id', new PhotoController_1.PhotoController().readPhoto);

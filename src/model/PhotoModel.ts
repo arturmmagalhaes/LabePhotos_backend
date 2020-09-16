@@ -7,6 +7,16 @@ export interface PhotoBaseModel {
     collection: string
 }
 
+export interface PhotoFeedModel {
+    id: string,
+    title: string,
+    id_author: string,
+    name_author: string,
+    create_at: string,
+    file: string,
+    collection: string
+}
+
 export interface PhotoReadImageInput {
     id_user: string,
     id_photo: string

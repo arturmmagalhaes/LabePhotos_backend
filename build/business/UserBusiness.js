@@ -60,7 +60,15 @@ class UserBusiness {
                 nickname: result.nickname
             };
             const token = yield this.authenticator.generateToken(dataAuthenticator);
-            return token;
+            const user = {
+                name: result.name,
+                username: result.nickname,
+                email: result.email
+            };
+            return {
+                token,
+                user
+            };
         });
     }
     businessRules(data) {

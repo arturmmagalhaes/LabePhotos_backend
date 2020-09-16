@@ -35,12 +35,12 @@ export class UserController {
 
     public async signIn(req: Request, res: Response) {
         try {
-            const token = await UserController.USER_BUSINESS.signIn({
+            const data = await UserController.USER_BUSINESS.signIn({
                 email: req.body.email,
                 password: req.body.password
             });
 
-            res.status(200).send({token});            
+            res.status(200).send(data);            
         } catch (error) {
             res.status(error.errorCode || 400).send({
                 message: error.message
