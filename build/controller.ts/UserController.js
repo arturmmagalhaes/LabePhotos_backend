@@ -39,11 +39,11 @@ class UserController {
     signIn(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const token = yield UserController.USER_BUSINESS.signIn({
+                const data = yield UserController.USER_BUSINESS.signIn({
                     email: req.body.email,
                     password: req.body.password
                 });
-                res.status(200).send({ token });
+                res.status(200).send(data);
             }
             catch (error) {
                 res.status(error.errorCode || 400).send({

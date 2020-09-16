@@ -41,7 +41,7 @@ export class UserBusiness {
             await this.userDatabase.signUp(dataBusiness);
     }
 
-    public async signIn(dataController: UserControllerSignInModel): Promise<string> {
+    public async signIn(dataController: UserControllerSignInModel): Promise<any> {
 
             if(!dataController || !dataController.email ||
                !dataController.password) {
@@ -68,7 +68,16 @@ export class UserBusiness {
 
             const token = await this.authenticator.generateToken(dataAuthenticator)
             
-            return token;
+            const user = {
+                name: result.name,
+                username: result.nickname,
+                email: result.email
+            }
+
+            return {
+                token,
+                user
+            };
     }
     
     public businessRules(data: UserControllerSignInModel) {

@@ -38,11 +38,13 @@ export class PhotoDatabase extends BaseDatabase {
     public async getFeed(id: string): Promise<PhotoFeedModel[]> { 
         try {
             const data = await super.getConnection().raw(`
-                SELECT * FROM ${PhotoDatabase.TABLE_NAME}
+                SELECT ${PhotoDatabase.TABLE_NAME}.id, title, id_author, create_at, file, collection, name, email, nickname
+                FROM ${PhotoDatabase.TABLE_NAME}
                 JOIN ${PhotoDatabase.TABLE_USER} 
                 ON ${PhotoDatabase.TABLE_NAME}.id_author = ${PhotoDatabase.TABLE_USER}.id
                 WHERE ${PhotoDatabase.TABLE_USER}.id = "${id}"
             `);
+            
             const result = data[0].map((element: any) => {
                 return {
                     id: element.id,

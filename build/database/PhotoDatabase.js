@@ -60,7 +60,8 @@ class PhotoDatabase extends BaseDatabase_1.BaseDatabase {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const data = yield _super.getConnection.call(this).raw(`
-                SELECT * FROM ${PhotoDatabase.TABLE_NAME}
+                SELECT ${PhotoDatabase.TABLE_NAME}.id, title, id_author, create_at, file, collection, name, email, nickname
+                FROM ${PhotoDatabase.TABLE_NAME}
                 JOIN ${PhotoDatabase.TABLE_USER} 
                 ON ${PhotoDatabase.TABLE_NAME}.id_author = ${PhotoDatabase.TABLE_USER}.id
                 WHERE ${PhotoDatabase.TABLE_USER}.id = "${id}"
