@@ -11,6 +11,7 @@ https://documenter.getpostman.com/view/11590027/TVK5cMLb
 - POST (/signin) -> Login dos Usuários
 - POST (/photo/create) -> usuário armazena uma imagem
 - GET (/photo/:id) -> Usuário recebe os detalhes de uma imagem
+- GET (/photo) -> Usuário recebe uma lista de imagens criadas por ele
 
 # Tecnologias
 - Typescript
